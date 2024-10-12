@@ -115,10 +115,10 @@ FortiSASE acts as a firewall and is placed between the endpoint and the internet
 This slide shows the flow of events that occurs during endpoint mode manual activation.
 
 1.The FortiSASE administrator sends an invitation email to the remote user, as part of user onboarding.
-2. The end user downloads FortiClient and connects to the FortiSASE Endpoint Management System (EMS) to activate the license, using the code in the email
-3. Once the license is activated, a secure SSL VPN is established from FortiClient to the nearest FortiSASE POP, based on geolocation selection.
-4. The FortiSASE administrator can apply security profiles on the VPN policies to secure internet traffic.
-5. You can also provision using FortiClient installers that you can download from the FortiSASE portal. Click Configuration, and then, in the ACCESS section, click Users > Onboard Users > Download Installer. 
+2.The end user downloads FortiClient and connects to the FortiSASE Endpoint Management System (EMS) to activate the license, using the code in the email
+3.Once the license is activated, a secure SSL VPN is established from FortiClient to the nearest FortiSASE POP, based on geolocation selection.
+4.The FortiSASE administrator can apply security profiles on the VPN policies to secure internet traffic.
+5.You can also provision using FortiClient installers that you can download from the FortiSASE portal. Click Configuration, and then, in the ACCESS section, click Users > Onboard Users > Download Installer. 
 
 You can then provision your endpoints by doing one of the following:
 - Use a mobile device management (MDM) software suite using this installer. 
