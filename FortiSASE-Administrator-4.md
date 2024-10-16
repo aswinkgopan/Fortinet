@@ -159,10 +159,9 @@ You can configure the Application Control With Inline-CASB profile on the Securi
 FortiSASE scans packets for matches, in this order, for the application control profile:
 
 - Application overrides: If you have configured any application, the application control profile considers those first. It looks for a matching override starting at the top of the list.
-
 - Categories: Finally, the application control profile applies the action that you've configured for applications in your selected categories.
 
-### Configure AntiVirus
+## Configure AntiVirus
 
 FortiSASE antivirus delivers automated updates that protect against the latest polymorphic attacks, viruses, spyware, and other content-level threats. Based on the patented content pattern recognition language (CPRL), the anti-malware engine is designed to prevent known and previously unknown malware variants. You can customize which protocol needs to be inspected using antivirus for secure internet access. You can configure an antivirus profile on the Security page, by selecting the appropriate security profile group. For antivirus scanning, the block replacement page is displayed immediately when a virus is detected.
 
@@ -170,7 +169,7 @@ Some of the inspected protocols are - HTTP, SMTP, POP3, IMAP, FTP, CIFS
 
 ### DLP
 
-The FortiSASE LP system allows you to prevent sensitive data from leaving your network. When you define sensitive data patterns, data matching these patterns will be blocked, or logged and allowed, when passing through the FortiSASE. You configure the DLP system by creating individual filters based on file type, file size, a regular expression, an advanced rule, or a compound rule in a DLP sensor.
+The FortiSASE DLP system allows you to prevent sensitive data from leaving your network. When you define sensitive data patterns, data matching these patterns will be blocked, or logged and allowed, when passing through the FortiSASE. You configure the DLP system by creating individual filters based on file type, file size, a regular expression, an advanced rule, or a compound rule in a DLP sensor.
 
 The DLP system is configured based on the following components:
 
@@ -178,7 +177,7 @@ The DLP system is configured based on the following components:
 
 	- Sensors: A DLP sensor is a package of filters. Each DLP sensor has one or more filters configured within it. Filters can examine traffic for known files using DLP fingerprints, for files of a particular type or name, for files larger than a specified size, for data matching specified regular expressions, and so on.
 	- MPIP Label: You can employ labels as markers for sensitive information. Microsoft provides sensitivity labels, which act as identifiers emphasizing the importance of the data that they are associated with, thereby enhancing the secunty measures in place. 
-	- None: LP matches using only file or message type and protocol as criteria.
+	- None: DLP matches using only file or message type and protocol as criteria.
 
 - Allow: FortiSASE takes no action, even if the patterns specified in the filter are matched.
 
@@ -241,8 +240,9 @@ FortiSASE uses the rules to determine if the endpoint is on fabric or off fabric
 
 ### Connection
 
-In the endpoint profile, you can configure FortiClient to automatically connect to the FortiSASE SSL VPN when the user logs in to the endpoint, or give the user the ability to connect manually. You can also bypass the FortiSASE autoconnect on FortiClient based on the on-fabric rule set configured. If the endpoint is detected to be on-fabric based on the rule set, then FortiSASE can be bypassed for security inspection because an on-premises firewall like FortiGate
-protects the internet access.
+`Configuration > Endpoints > Profile > Connection`
+
+In the endpoint profile, you can configure FortiClient to automatically connect to the FortiSASE SSL VPN when the user logs in to the endpoint, or give the user the ability to connect manually. You can also bypass the FortiSASE autoconnect on FortiClient based on the on-fabric rule set configured. If the endpoint is detected to be on-fabric based on the rule set, then FortiSASE can be bypassed for security inspection because an on-premises firewall like FortiGate protects the internet access.
 
 You can also configure split tunneling, where you can specify which traffic to exclude from the VPN tunnel and redirect to the endpoint physical interface bypassing FortiSASE.
 
@@ -253,13 +253,102 @@ You can also configure split tunneling, where you can specify which traffic to e
 	- Manually
 	- Manually connect to the FortiSASE SSL VPN
 
-### Connection ( Contd )
-
-- Not available in default profile
-- Custom VPN tunnels
-	- IPsec tunnel
-	- SSL VPN tunnel
 
 You can configure a custom IPsec or SSL VPN configuration. These configurations are typically useful for use cases that require endpoints to connect to an on-premises FortiGate through a VPN.
+
+
+## Protection - Malware
+
+`Configuration > Endpoints > Profile > Protection`
+
+In Malware section, you can enable Next Generation Antivirus and Anti-Randsomware
+
+You can enable Next Generation AntiVirus in the Malware section. Enabling Next Generation Antivirus turns on real-time protection and cloud-based malware detection. Real-time protection scans files as they are downloaded or copied to the endpoint. The cloud-based malware protection feature
+helps protect endpoints from high-risk file types that come from external sources, such as the internet or network drives, by querying FortiGuard to determine whether files are malicious.
+
+Antiransomware protects specific files, folders, or file types on your endpoints from unauthorized changes. The Anti-Ransomware section includes settings for protected folders, file types, and action valid signer. You can select the folders you want in the existing list or create a custom directory to protect. Use the Create to add a new folder. FortiClient antiransomware protects all content in the selected folders against unauthorized changes.
+
+### Protection - Vulnerability Scan
+
+The Scan for Vulnerabilities section enables scanning on endpoints
+
+- Scan on connecting to FortiSASE
+- Scan for OS and vulnerability signature updates
+- Configure scheduled scans
+
+Endpoint vulnerabilities can be reviewed on the Security dashboard on the FortiSASE portal
+
+You can enable vulnerability scans to run on endpoints after they connect to FortiSASE and when they update a vulnerability signature. You can enable scanning for endpoint OS updates and then applying the updates. You can also schedule scans. In the Schedule type field, you can select Daily, Weekly, or Monthly. You can also specify the time the scan will start.
+
+A vulnerability scan identifies vulnerabilities on the endpoint that should be fixed by installing software patches. You must manually download and install software patches for the vulnerable software. You can view details about endpoint vulnerabilities in the Security dashboard on the FortiSASE portal.
+
+### Protection - Removal Media Access Control
+
+- FortiClient controls access to removable media devices
+	- USB Drives
+	- External Hard Disks
+- Forticlient cam allow, block, or monitor devices
+
+The Removable Media Access section controls access to removable media devices, such as USB drives and external hard drives. You can also configure rules to allow or block specific removable devices. Rules for specific devices require the class, manufacturer, vendor ID, product ID, and revision information for the devices. You can find the required values for the devices in one of the following ways: Microsoft Windows Device Manager: select the device and view its properties. 
+
+USBDeview FortiClient can allow, block, or monitor access to removable media devices based on the rules, as configured by the FortiSASE administrator. Access control or action for devices that do not match any configured rules are controlled by the Default Removable Media Access setting.
+
+### Configure Sanboxes
+
+`Configuration > Endpoints > Profile > Sandbox`
+
+You can enable the sandbox feature on FortiSASE by selecting FortiSASE or Standalone FortiSandbox as the Sandbox Mode on the Sandbox tab in the endpoint profile.
+When you enable sandbox, the following options are available:
+
+- In the File Submission Options section, you can select file resources like removable media, network drives, web downloads, and email downloads.
+- Remediation Actions allows you to select the Quarantine or Alert & Notify action for infected files.
+- Exceptions allows you to exclude files from trusted sources and specific files or folders.
+
+When configured, FortiSandbox automatically scans files that are downloaded on the endpoint, on removable media attached to the endpoint, or on mapped network drives. FortiClient also automatically scans files that are downloaded with an email client on the endpoints, or from the internet. In each case, if the file is not detected locally, and FortiSandbox integration is configured, FortiClient sends the file to FortiSandbox for further analysis. Endpoint users can also manually submit files to FortiSandbox for scanning. 
+
+FortiClient periodically downloads the latest antivirus signatures from FortiSandbox and applies them locally to all real-time and on-demand antivirus scanning.
+
+### Sandbox ( Contd )
+
+You can configure the following file submission options:
+
+- All Files Executed from Removable Media: Enable this option to send all files executed on removable media, such as USB drives, to FortiSandbox for analysis.
+- All Files Executed from Mapped Network Drives: Enable this option to submit all files that are executed on mapped network drives to FortiSandbox for analysis.
+- All Web Downloads: Enable this option to submit all web downloads on the endpoint to FortiSandbox for analysis.
+- All Email Downloads: Enable this option to submit all email downloads on the endpoint to FortiSandbox for analysis.
+
+You can configure the following remediation options:
+
+- Quarantine infected files: Enable this option to quarantine infected files.
+- Alert & Notify: Enable this option to alert and notify the endpoint user about infected files, but not quarantine infected files.
+
+You can configure the following exceptions:
+
+- Exclude Files from Trusted sources: Enable this option to exclude files from being sent to FortiSandbox that are signed by trusted sources like Microsoft, Fortinet, Intel, and so on.
+- Exempt Specified Folders/Files: Create the exclusion list to exempt specified files and/or folders from FortiSandbox analysis.
+
+## ZTNA Destinations
+
+`Configuration > Endpoints > Profile > ZTNA`
+
+- Provide a secure encrypted connection without using a VPN
+- FortiClient works with FortiGate, which acts as an HTTPS gateway
+- Secure connection (HTTPS) uses a certificate received from FortiSASE and includes the FortiClient UID
+- The UID is used to identify the device and, based on the configuration, FortiGate allows or denies access
+
+ZTNA destinations on FortiClient create a secure encrypted connection to protected applications without using a VPN. FortiClient uses the FortiGate application proxy feature to create a secure connection through HTTPS, using a certificate received from FortiSASE that includes the FortiClient UID. FortiGate acts as an HTTPS gateway.
+
+## Groups and Active Directory Users
+
+`Configuration > Endpoints > Profile > Groups & AD Users`
+
+The option to assign profiles to endpoints is only available in newly created profiles and not the default profile. You can assign different endpoint profiles for users based on their AD username or group membership. To view users and groups from the AD server you must integrate your AD server with FortiSASE. The example on this slide shows that the endpoint profile ADUsers is assigned to users in the LDAP user group fortilab.local/Users.
+
+Another option is to assign endpoint profiles for non-AD groups by creating nested non-AD groups and manually assigning endpoints to the group.
+
+FortiGate retrieves the UID to identify the device and check other endpoint information that FortiSASE provides to FortiGate, which can include other identity and posture information. FortiGate allows or denies access, as applicable.
+
+
+
 
 
